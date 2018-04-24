@@ -1,0 +1,63 @@
+@(data : entities.UserData)
+@main(){
+<style>
+</style>
+<div id="info">
+    <table id="login_t">
+        <tbody>
+        <tr>
+            <td><h3>Данные юридического лица:</h3></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        <tr>
+            <td>ИНН</td>
+            <td>@data.getInn</td>
+        </tr>
+        <tr>
+            <td>КПП</td>
+            <td>@data.getKpp</td>
+        </tr>
+        <tr>
+            <td>БИК</td>
+            <td>@data.getBik</td>
+        </tr>
+        <tr>
+            <td>Название организации</td>
+            <td>@data.getFullName</td>
+        </tr>
+        <tr>
+            <td>Длительность счета</td>
+            <td>@data.getBillProlongation д.</td>
+        </tr>
+        <tr>
+            <td>Адрес</td>
+            <td>@data.getAdress</td>
+        </tr>
+        <tr>
+            <td>Телефоны</td>
+            <td>@data.getPhone</td>
+        </tr>
+        <tr>
+            <td><h3>Данные Банка:</h3></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        <tr>
+            <td>БИК</td>
+            <td>@data.getBank.getBik</td>
+        </tr>
+        <tr>
+            <td>Название</td>
+            <td>@data.getBank.getFullName</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+}

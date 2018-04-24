@@ -1,0 +1,54 @@
+@(message: String, myForm: Form[models.LoginUser])
+@helper.form(action = routes.AuthController.validateAutentification()) {
+<style>
+    #login_t{
+        margin: 0% 0% 0% 45%;
+    }
+    #auth-container{
+        height:100%;
+        width:100%
+    }
+    dd{
+        display:contents;
+    }
+    dt{
+        display:none;
+    }
+</style>
+<div id="auth-container">
+    <table id="login_t">
+        <tbody>
+        <tr>
+            <td>
+                @if(myForm.hasGlobalErrors) {
+                <p class="error">
+                    @myForm.globalError.message
+                </p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Логин</td>
+        </tr>
+        <tr>
+            <td>
+                @helper.inputText(myForm("login"), 'label->"", 'class -> "login_input")
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Пароль</td>
+        </tr>
+        <tr>
+            <td>
+                @helper.inputText(myForm("password"), 'label->"", 'class -> "login_input")
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input align="left" type="submit" value="login"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+}

@@ -1,0 +1,43 @@
+@main(){
+<div>
+    <table id="order_data">
+        <tbody>
+        <tr>
+            <td><input type="text" id="order_number"><label for="order_number">№ заказа</label></td>
+            <td><input type="text" id="bill_number"><label for="bill_number">№ счета</label></td>
+        </tr>
+        <tr>
+            <td><input type="text" id="customer"><label for="customer">Покупатель</label></td>
+        </tr>
+        </tbody>
+    </table>
+    <form>
+        <table style="width:100%;">
+            <tbody id="uslug_table_body">
+            <tr>
+                <td><label>№</label></td>
+                <td><label>Код</label></td>
+                <td><label>Наименование товара/работ/услуг</label></td>
+                <td><label>Кол-во</label></td>
+                <td><label>Цена</label></td>
+                <td><label>Сумма</label></td>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="button" id="add_button" value="+" onclick="addRow(event)"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div><input id="generate_qr_button" value="Сгенерировать" type="button"></div>
+</div>
+
+<script>
+
+</script>
+}

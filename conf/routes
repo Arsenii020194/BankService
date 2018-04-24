@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /message                    controllers.AsyncController.message
+
+GET     /count                      controllers.CountController.count
+
+POST    /login                      controllers.AuthController.validateAutentification
+GET     /                           controllers.AuthController.login
+GET     /logout                     controllers.AuthController.logout
+
+GET     /info                       controllers.MainController.info
+GET     /generate                   controllers.MainController.generate
+
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes

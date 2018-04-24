@@ -1,0 +1,28 @@
+#side_panel a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+
+#side_panel a:hover {
+    background-color: #ccc;
+}
+#side_panel{
+    display: inline-block;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    width: 250px;
+    background-color: #eee;
+}
+#content{
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+}
