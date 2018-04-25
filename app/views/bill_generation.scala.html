@@ -1,19 +1,22 @@
 @main(){
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/generate_qr.css")">
 <div>
     <table id="order_data">
         <tbody>
         <tr>
-            <td><input type="text" id="order_number"><label for="order_number">№ заказа</label></td>
-            <td><input type="text" id="bill_number"><label for="bill_number">№ счета</label></td>
+            <td><label class="checked_input_label" for="order_number">№ заказа</label><input type="text" class="checked_input" oninput="validateInt(event)" id="order_number"></td>
+            <td><label class="checked_input_label" for="bill_number">№ счета</label><input type="text" class="checked_input" oninput="validateInt(event)" id="bill_number"></td>
         </tr>
         <tr>
-            <td><input type="text" id="customer"><label for="customer">Покупатель</label></td>
+            <td colspan="2"><label class="checked_input_label" for="customer">Покупатель</label><input style="width: 368px;" type="text" class="checked_input" id="customer"></td>
         </tr>
         </tbody>
     </table>
     <form>
         <table style="width:100%;">
             <tbody id="uslug_table_body">
+            <tr id="error_row" style="display:none; color:red;"><td colspan="7"><div>Заполните значения в подсвеченных ячейках!</div></td></tr>
+            <tr id="error_val_row" style="display:none; color:red;"><td colspan="7"><div>Завершите редактирование данных в таблице!</div></td></tr>
             <tr>
                 <td><label>№</label></td>
                 <td><label>Код</label></td>
@@ -21,20 +24,22 @@
                 <td><label>Кол-во</label></td>
                 <td><label>Цена</label></td>
                 <td><label>Сумма</label></td>
+                <td><a style="padding: 1px; cursor:pointer;" class="add_button" onclick="addRow(event)"></a></td>
             </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="button" id="add_button" value="+" onclick="addRow(event)"></td>
+            <tr class="filled_uslugs">
+                <td data-value="num"><div>1</div></td>
+                <td data-value="code"><input type="text" oninput="validateInt(event)"></td>
+                <td data-value="type"><input type="text"></td>
+                <td data-value="count"><input type="text" oninput="validateInt(event)"></td>
+                <td data-value="price"><input type="text" oninput="validateFloat(event)"></td>
+                <td data-value="summ"><div></div></td>
+                <td><a style="padding: 1px; cursor:pointer;" class="append_edit_button" onclick="appendEdit(event)"></a></td>
+                <td><a class="remove_button" style="padding: 1px;" onclick="removeRow(event)"></a></td>
             </tr>
             </tbody>
         </table>
     </form>
-    <div><input id="generate_qr_button" value="Сгенерировать" type="button"></div>
+    <div style="padding-top: 20px;"><input id="generate_qr_button" value="Сгенерировать" type="button" onclick="generateBill(event)"></div>
 </div>
 
 <script>

@@ -19,6 +19,12 @@ public class Bill extends Model {
     private BigInteger id;
 
     @Column
+    private Integer num;
+
+    @Column
+    private Integer orderNumber;
+
+    @Column
     private Timestamp date;
 
     @Column
@@ -32,13 +38,30 @@ public class Bill extends Model {
     @Column
     private String customer;
 
-    @Transient
+    @Column
+    @Lob
     private List<String> uslugs;
 
     @Column
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] file;
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public BigInteger getId() {
         return id;
