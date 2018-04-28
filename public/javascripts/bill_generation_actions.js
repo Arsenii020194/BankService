@@ -1,53 +1,49 @@
-function addRow(event){
+function addRow(event) {
     let numTd = $('[data-value="num"]').last().children('div').text();
     $('#uslug_table_body').append($('<tr data-status="filling" class="filled_uslugs"><td data-value="num"><div>' + (++numTd) + '</div><td data-value="code"><input type="text" oninput="validateInt(event)"></td><td data-value="type"><input type="text"></td><td data-value="count"><input type="text" oninput="validateInt(event)"></td><td data-value="price"><input type="text" oninput="validateFloat(event)"></td><td data-value="summ"><div></div></td><td><a class="append_edit_button" style="padding: 1px;" onclick="appendEdit(event)"></a></td><td><a class="remove_button" style="padding: 1px;" onclick="removeRow(event)"></a></td>'));
 }
 
-function Bill(){
-
-}
-
-function removeRow(event){
+function removeRow(event) {
     $(event.target).parent().parent().remove();
     let nums = $('[data-value="num"]');
-    for(let i=0; i< nums.length; i++){
-      nums.eq(i).children().last().text(i+1);
+    for (let i = 0; i < nums.length; i++) {
+        nums.eq(i).children().last().text(i + 1);
     }
 }
 
-function toDivs(row){
+function toDivs(row) {
     let isValid = isRowValid(row);
-    let codeTd = row.find('[data-value="code"]').children().eq(0);
-    let typeTd = row.find('[data-value="type"]').children().eq(0);
-    let countTd = row.find('[data-value="count"]').children().eq(0);
-    let priceTd = row.find('[data-value="price"]').children().eq(0);
+    let code = row.find('[data-value="code"]').children().eq(0);
+    let type = row.find('[data-value="type"]').children().eq(0);
+    let count = row.find('[data-value="count"]').children().eq(0);
+    let price = row.find('[data-value="price"]').children().eq(0);
 
-    if(isValid){
-        codeTd[0].outerHTML = '<div data-value="code">' + codeTd.val() + '</div>';
-        typeTd[0].outerHTML = '<div data-value="type">' + typeTd.val() + '</div>';
-        countTd[0].outerHTML = '<div data-value="count">' + countTd.val() + '</div>';
-        priceTd[0].outerHTML = '<div data-value="price">' + priceTd.val() + '</div>';
-        let summTd = row.find('[data-value="summ"]').children().eq(0);
-        summTd.text(countTd.val() * priceTd.val());
+    if (isValid) {
+        code[0].outerHTML = '<div data-value="code">' + code.val() + '</div>';
+        type[0].outerHTML = '<div data-value="type">' + type.val() + '</div>';
+        count[0].outerHTML = '<div data-value="count">' + count.val() + '</div>';
+        price[0].outerHTML = '<div data-value="price">' + price.val() + '</div>';
+        let summ = row.find('[data-value="summ"]').children().eq(0);
+        summ.text(count.val() * price.val());
     }
 }
 
-function isRowValid(row){
+function isRowValid(row) {
     let isValid = true;
     tds = row.children('td');
-    for(let i=0; i<tds.length; i++){
+    for (let i = 0; i < tds.length; i++) {
         let cInput = tds.eq(i).children('input')
-        if(cInput){
-            if (cInput.val() == ''){
-                    cInput.addClass('error_field');
-                    isValid = false;
-                } else {
-                    cInput.removeClass('error_field');
-                }
+        if (cInput) {
+            if (cInput.val() == '') {
+                cInput.addClass('error_field');
+                isValid = false;
+            } else {
+                cInput.removeClass('error_field');
+            }
         }
     }
 
-    if(isValid){
+    if (isValid) {
         $('#error_row').hide();
         row.attr('data-status', 'valid');
     } else {
@@ -57,35 +53,88 @@ function isRowValid(row){
     return isValid;
 }
 
-function toInputs(row){
-    codeTd = row.find('[data-value="code"]').children().eq(0);
-    codeTd[0].outerHTML = '<input data-value="code" oninput="validateInt(event)" value="'+ codeTd.text() + '"></input>';
-    let typeTd = row.find('[data-value="type"]').children().eq(0);
-    typeTd[0].outerHTML = '<input data-value="type" value="'+ typeTd.text() + '"></input>';
-    let countTd = row.find('[data-value="count"]').children().eq(0);
-    countTd[0].outerHTML = '<input data-value="count" oninput="validateInt(event)" value="'+ countTd.text() + '"></input>';
-    let priceTd = row.find('[data-value="price"]').children().eq(0);
-    priceTd[0].outerHTML = '<input data-value="price" oninput="validateFloat(event)" value="'+ priceTd.text() + '"></input>';
+function toInputs(row) {
+    let code = row.find('[data-value="code"]').children().eq(0);
+    code[0].outerHTML = '<input data-value="code" oninput="validateInt(event)" value="' + code.text() + '"></input>';
+    let type = row.find('[data-value="type"]').children().eq(0);
+    type[0].outerHTML = '<input data-value="type" value="' + type.text() + '"></input>';
+    let count = row.find('[data-value="count"]').children().eq(0);
+    count[0].outerHTML = '<input data-value="count" oninput="validateInt(event)" value="' + count.text() + '"></input>';
+    let price = row.find('[data-value="price"]').children().eq(0);
+    price[0].outerHTML = '<input data-value="price" oninput="validateFloat(event)" value="' + price.text() + '"></input>';
     row.attr('data-status', 'filling');
 }
 
-function validateInt(event){
-     event.target.value = (event.target.value.replace(/[^0-9]/g, ''));
+function validateInt(event) {
+    event.target.value = (event.target.value.replace(/[^0-9]/g, ''));
 }
 
-function validateFloat(event){
+function validateFloat(event) {
     event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 }
 
-function appendEdit(event){
-    let row =  $(event.target).parent().parent();
-    if(isRowValid(row)){
+function appendEdit(event) {
+    let row = $(event.target).parent().parent();
+    if (isRowValid(row)) {
         toDivs(row);
         $(event.target)[0].outerHTML = '<a style="padding: 1px; cursor:pointer;" class="edit_button" onclick="edit(event)"></a>';
     }
 }
 
-function Uslug(num, code, type, count, price, summ){
+function edit(event) {
+    let row = $(event.target).parent().parent();
+    toInputs(row);
+    $(event.target)[0].outerHTML = '<a style="padding: 1px;" class="append_edit_button" onclick="appendEdit(event)"></a>';
+}
+
+function generateBill() {
+    $('#error_row').hide();
+    $('#error_val_row').hide();
+    let rows = $('.filled_uslugs');
+    let valid = true;
+    for (let i = 0; i < rows.length; i++) {
+        if (rows.eq(i).attr('data-status') !== 'valid') {
+            valid = false;
+            if (!isRowValid(rows.eq(i))) {
+                $('#error_row').show();
+            }
+            $('#error_val_row').show();
+        }
+    }
+
+    let checkedInputs = $('.checked_input');
+    for (let i = 0; i < checkedInputs.length; i++) {
+        if (checkedInputs.eq(i).val() == '') {
+            checkedInputs.eq(i).addClass('error_field');
+            $('#error_row').show();
+            valid = false;
+        } else {
+            checkedInputs.eq(i).removeClass('error_field');
+        }
+    }
+
+    if (valid) {
+        let uslugs = $('.filled_uslugs');
+        let uslArr = new Array();
+        for (let i = 0; i < uslugs.length; i++) {
+            let num = uslugs.eq(i).find('[data-value="num"]').children().eq(0).text();
+            let code = uslugs.eq(i).find('[data-value="code"]').children().eq(0).text();
+            let type = uslugs.eq(i).find('[data-value="type"]').children().eq(0).text();
+            let count = uslugs.eq(i).find('[data-value="count"]').children().eq(0).text();
+            let price = uslugs.eq(i).find('[data-value="price"]').children().eq(0).text();
+            let summ = uslugs.eq(i).find('[data-value="summ"]').children().eq(0).text();
+            uslArr.push(new Uslug(num, code, type, count, price, summ));
+        }
+        let numOrder = $('#order_number').val();
+        let billNumber = $('#bill_number').val();
+        let customer = $('#customer').val();
+
+        let bill = new Bill(numOrder, billNumber, customer, uslArr);
+        downloadPdf(JSON.stringify(bill));
+    }
+}
+
+function Uslug(num, code, type, count, price, summ) {
     this.num = num;
     this.code = code;
     this.type = type;
@@ -94,39 +143,27 @@ function Uslug(num, code, type, count, price, summ){
     this.summ = summ;
 }
 
-function edit(event){
- let row = $(event.target).parent().parent();
- toInputs(row);
- $(event.target)[0].outerHTML = '<a style="padding: 1px;" class="append_edit_button" onclick="appendEdit(event)"></a>';
+
+function Bill(numOrder, billNumber, customer, uslugs) {
+    this.numOrder = numOrder;
+    this.billNumber = billNumber;
+    this.customer = customer;
+    this.uslugs = uslugs;
 }
 
-function generateBill(){
-    $('#error_row').hide();
-    $('#error_val_row').hide();
-    let rows = $('.filled_uslugs');
-    let valid = true;
-    for(let i=0; i<rows.length; i++){
-        if(rows.eq(i).attr('data-status')!=='valid'){
-            valid = false;
-            if(!isRowValid(rows.eq(i))){
-                $('#error_row').show();
-            }
-            $('#error_val_row').show();
-        }
-    }
+function downloadPdf(json){
+    var xhr = new XMLHttpRequest();
 
-    let checkedInputs = $('.checked_input');
-    for(let i=0; i< checkedInputs.length; i++){
-        if(checkedInputs.eq(i).val()==''){
-                checkedInputs.eq(i).addClass('error_field');
-                $('#error_row').show();
-                valid = false;
-            }else{
-                checkedInputs.eq(i).removeClass('error_field');
-            }
-    }
-
-    if (valid){
-
-    }
+    xhr.open("POST", jsRoutes.controllers.BillGenerationController.generatePdf().url, true)
+    xhr.setRequestHeader('Content-type', 'text/plain; charset=utf-8');
+    xhr.onload = function (event) {
+             var blob = xhr.response;
+             var fileName = xhr.getResponseHeader("fileName") //if you have the fileName header available
+             var link=document.getElementById('hidden_link');
+             link.href=window.URL.createObjectURL(blob);
+             link.download=fileName + '.pdf';
+             link.click();
+         };
+    xhr.responseType = 'blob';
+    xhr.send(json);
 }

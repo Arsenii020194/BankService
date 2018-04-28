@@ -9,7 +9,7 @@ public class Application extends Controller {
     public Result javascriptRoutes() {
         return ok(
                 JavaScriptReverseRouter.create("jsRoutes",
-                        routes.javascript.MainController.info()
+                        routes.javascript.BillGenerationController.generatePdf()
                 )
         ).as("text/javascript");
     }

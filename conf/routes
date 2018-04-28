@@ -14,5 +14,7 @@ GET     /logout                     controllers.AuthController.logout
 GET     /info                       controllers.MainController.info
 GET     /generate                   controllers.MainController.generate
 
+POST     /generate_pdf              controllers.BillGenerationController.generatePdf
+
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes
+GET     /javascriptRoutes      controllers.Application.javascriptRoutes
