@@ -21,6 +21,9 @@ public class User extends Model {
     private String login;
 
     @Column
+    private Integer role;
+
+    @Column
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
@@ -34,6 +37,14 @@ public class User extends Model {
         this.id = id;
     }
 
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -42,20 +53,20 @@ public class User extends Model {
         this.login = login;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserData getUserData() {
-        return userData;
-    }
-
-    public void setUserData(UserData userData) {
-        this.userData = userData;
     }
 
     public List<Bill> getBills() {
@@ -71,14 +82,16 @@ public class User extends Model {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return Objects.equals(userData, user.userData) &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password);
+                Objects.equals(role, user.role) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(bills, user.bills);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(login, password);
+        return Objects.hash(userData, login, role, password, bills);
     }
 }

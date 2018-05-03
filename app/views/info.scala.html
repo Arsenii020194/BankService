@@ -22,10 +22,6 @@
             <td>@data.getKpp</td>
         </tr>
         <tr>
-            <td>БИК</td>
-            <td>@data.getBik</td>
-        </tr>
-        <tr>
             <td>Название организации</td>
             <td>@data.getFullName</td>
         </tr>
@@ -42,21 +38,25 @@
             <td>@data.getPhone</td>
         </tr>
         <tr>
-            <td><h3>Данные Банка:</h3></td>
+            <td><h3>Счета:</h3></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="3">
                 <hr/>
             </td>
         </tr>
         <tr>
             <td>БИК</td>
-            <td>@data.getBank.getBik</td>
+            <td>Название банка</td>
+            <td>Номер счета</td>
         </tr>
+        @for(acc <- data.getAccounts()){
         <tr>
-            <td>Название</td>
-            <td>@data.getBank.getFullName</td>
+            <td>@acc.getBank().getBik()</td>
+            <td>@acc.getBank().getFullName()</td>
+            <td>@acc.getAccount()</td>
         </tr>
+        }
         </tbody>
     </table>
 </div>

@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Arial';
+    src: url(file:C:/Windows/fonts/Arial.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    font-family:Arial;
+}
+
+.bordered td{
+    border:1px solid black;
+}
+
+.underlined_cell{
+    border-bottom: 1px solid black;
+}
+
+.footer_cell{
+    text-align:center;
+    font-size:0.5em;
+    vertical-align:top;
+    width:50em;
+}

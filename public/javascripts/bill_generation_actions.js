@@ -24,7 +24,7 @@ function toDivs(row) {
         count[0].outerHTML = '<div data-value="count">' + count.val() + '</div>';
         price[0].outerHTML = '<div data-value="price">' + price.val() + '</div>';
         let summ = row.find('[data-value="summ"]').children().eq(0);
-        summ.text(count.val() * price.val());
+        summ.text(Math.round(count.val() * price.val() * 100) / 100);
     }
 }
 
@@ -128,10 +128,19 @@ function generateBill() {
         let numOrder = $('#order_number').val();
         let billNumber = $('#bill_number').val();
         let customer = $('#customer').val();
-
-        let bill = new Bill(numOrder, billNumber, customer, uslArr);
+        let finalSum = getFinalSum();
+        let bill = new Bill(numOrder, billNumber, customer, uslArr, finalSum);
         downloadPdf(JSON.stringify(bill));
     }
+}
+
+function getFinalSum(){
+    let summ = 0;
+    $('[data-value="summ"]').each(function(index, value){
+        summ = summ + $(value.children[0]).text();
+    });
+
+    return Math.round(summ * 100) / 100;
 }
 
 function Uslug(num, code, type, count, price, summ) {
@@ -144,11 +153,12 @@ function Uslug(num, code, type, count, price, summ) {
 }
 
 
-function Bill(numOrder, billNumber, customer, uslugs) {
+function Bill(numOrder, billNumber, customer, uslugs, finalSum) {
     this.numOrder = numOrder;
     this.billNumber = billNumber;
     this.customer = customer;
     this.uslugs = uslugs;
+    this.finalSum = finalSum;
 }
 
 function downloadPdf(json){

@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,18 +26,14 @@ public class UserData extends Model {
     @Column
     private Integer inn;
 
-    @Column
-    private Integer bik;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userData")
+    private List<Account> accounts;
 
     @Column
     private Integer kpp;
 
     @Column
     private String fullName;
-
-    @JoinColumn(name = "bank")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Bank bank;
 
     @Column
     private String adress;
@@ -50,6 +47,14 @@ public class UserData extends Model {
 
     public void setId(BigInteger id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getBillProlongation() {
@@ -68,12 +73,12 @@ public class UserData extends Model {
         this.inn = inn;
     }
 
-    public Integer getBik() {
-        return bik;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setBik(Integer bik) {
-        this.bik = bik;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public Integer getKpp() {
@@ -92,14 +97,6 @@ public class UserData extends Model {
         this.fullName = fullName;
     }
 
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
     public String getAdress() {
         return adress;
     }
@@ -116,25 +113,17 @@ public class UserData extends Model {
         this.phone = phone;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserData userData = (UserData) o;
-        return Objects.equals(billProlongation, userData.billProlongation) &&
+        return Objects.equals(user, userData.user) &&
+                Objects.equals(billProlongation, userData.billProlongation) &&
                 Objects.equals(inn, userData.inn) &&
-                Objects.equals(bik, userData.bik) &&
+                Objects.equals(accounts, userData.accounts) &&
                 Objects.equals(kpp, userData.kpp) &&
                 Objects.equals(fullName, userData.fullName) &&
-                Objects.equals(bank, userData.bank) &&
                 Objects.equals(adress, userData.adress) &&
                 Objects.equals(phone, userData.phone);
     }
@@ -142,6 +131,6 @@ public class UserData extends Model {
     @Override
     public int hashCode() {
 
-        return Objects.hash(billProlongation, inn, bik, kpp, fullName, bank, adress, phone);
+        return Objects.hash(user, billProlongation, inn, accounts, kpp, fullName, adress, phone);
     }
 }

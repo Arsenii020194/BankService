@@ -8,6 +8,7 @@ public class BillDTO {
     private int billNumber;
     private String customer;
     private List<UslugDTO> uslugs;
+    private double finalSum;
 
     public int getNumOrder() {
         return numOrder;
@@ -39,5 +40,9 @@ public class BillDTO {
 
     public void setUslugs(List<UslugDTO> uslugs) {
         this.uslugs = uslugs;
+    }
+
+    public double getFinalSum() {
+        return finalSum;
     }
 }

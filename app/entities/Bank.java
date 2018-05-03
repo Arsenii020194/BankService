@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,8 +19,8 @@ public class Bank extends Model{
     @Column
     private Integer bik;
 
-    @OneToOne(mappedBy = "bank")
-    private UserData userData ;
+    @OneToMany(mappedBy = "bank")
+    private List<Account> account;
 
     public BigInteger getId() {
         return id;
@@ -45,12 +46,12 @@ public class Bank extends Model{
         this.bik = bik;
     }
 
-    public UserData getUserData() {
-        return userData;
+    public List<Account> getAccount() {
+        return account;
     }
 
-    public void setUserData(UserData userData) {
-        this.userData = userData;
+    public void setAccount(List<Account> account) {
+        this.account = account;
     }
 
     @Override
@@ -60,12 +61,12 @@ public class Bank extends Model{
         Bank bank = (Bank) o;
         return Objects.equals(fullName, bank.fullName) &&
                 Objects.equals(bik, bank.bik) &&
-                Objects.equals(userData, bank.userData);
+                Objects.equals(account, bank.account);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(fullName, bik, userData);
+        return Objects.hash(fullName, bik, account);
     }
 }

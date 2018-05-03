@@ -5,7 +5,6 @@ import com.avaje.ebean.Model;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +46,14 @@ public class Bill extends Model {
     @Basic(fetch = FetchType.LAZY)
     private byte[] file;
 
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
     public Integer getNum() {
         return num;
     }
@@ -61,14 +68,6 @@ public class Bill extends Model {
 
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
     }
 
     public Timestamp getDate() {
@@ -124,19 +123,19 @@ public class Bill extends Model {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bill bill = (Bill) o;
-        return Objects.equals(date, bill.date) &&
+        return Objects.equals(num, bill.num) &&
+                Objects.equals(orderNumber, bill.orderNumber) &&
+                Objects.equals(date, bill.date) &&
                 Objects.equals(activeFor, bill.activeFor) &&
                 Objects.equals(reciever, bill.reciever) &&
                 Objects.equals(customer, bill.customer) &&
-                Arrays.equals(file, bill.file);
+                Objects.equals(uslugs, bill.uslugs);
     }
 
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(date, activeFor, reciever, customer);
-        result = 31 * result + Arrays.hashCode(file);
-        return result;
+        return Objects.hash(num, orderNumber, date, activeFor, reciever, customer, uslugs);
     }
 }
 
