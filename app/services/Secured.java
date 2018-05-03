@@ -20,9 +20,6 @@ public class Secured extends Security.Authenticator {
     @Inject
     private AuthController auth;
     public static final String LOGIN = "login";
-    public static final String SELECTED_PATIENT = "selpatient";
-    public static final String SELECTED_GROUP = "selgroup";
-    public static final String SELECTED_CORPUS = "selcorpus";
     public static final String USER_TIME = "userTime";
     public static final String MAX_AGE_PATH = "play.http.session.maxAge";
 

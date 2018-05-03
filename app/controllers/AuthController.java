@@ -14,7 +14,6 @@ import services.Secured;
 import views.html.login;
 
 import javax.inject.Inject;
-
 import java.sql.SQLException;
 
 import static services.Secured.USER_TIME;
@@ -66,6 +65,7 @@ public class AuthController extends Controller {
     private boolean userSessionStart(User user) {
         try {
             main.createCookie("login", user.getLogin());
+            main.createCookie("role", user.getRole().toString());
             return true;
         } catch (Exception e) {
             Logger.error(e.getMessage(), e);
@@ -79,7 +79,9 @@ public class AuthController extends Controller {
     public boolean userSessionStop() {
         try {
             cache.remove(main.getCookie("login"));
+            cache.remove(main.getCookie("role"));
             main.removeCookie("login");
+            main.removeCookie("role");
             main.removeCookie(USER_TIME);
             return true;
 
