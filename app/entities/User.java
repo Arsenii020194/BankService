@@ -11,10 +11,10 @@ import java.util.Objects;
 public class User extends Model {
     @Column(name = "id_user")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private UserData userData;
 
     @Column
@@ -26,7 +26,7 @@ public class User extends Model {
     @Column
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "reciever")
     private List<Bill> bills;
 
     public Integer getId() {

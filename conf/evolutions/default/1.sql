@@ -65,10 +65,17 @@ create index ix_bill_reciever on bill (reciever);
 alter table user_data add constraint fk_user_data_user foreign key (user) references users (id_user) on delete restrict on update restrict;
 
 INSERT INTO USERS VALUES(1, 'test_user', 1, 'test_user');
+select users_seq.nextval;
 INSERT INTO bank VALUES(1, 'Тестовый банк', 123564987);
+select bank_seq.nextval;
+INSERT INTO bank VALUES(2, 'Тестовый банк2', 012345678);
+select bank_seq.nextval;
 INSERT INTO user_data VALUES(1, 1, 10, 123456789, 999999999, 'ооо Тестовая организация', 'г.Тестовый, ул.Тестовая д.тестовый 443099','8937000000');
+select user_data_seq.nextval;
 INSERT INTO accounts VALUES(1, 1, 1, '77777777777777777777777777');
+select accounts_seq.nextval;
 INSERT INTO accounts VALUES(2, 1, 1, '12312312312312312312312312');
+select accounts_seq.nextval;
 # --- !Downs
 
 alter table accounts drop constraint if exists fk_accounts_user_data;

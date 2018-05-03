@@ -12,14 +12,14 @@ import java.util.Objects;
 public class Bank extends Model{
     @Column(name = "id_bank")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private BigInteger id;
     @Column(name = "full_name")
     private String fullName;
     @Column
     private Integer bik;
 
-    @OneToMany(mappedBy = "bank")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "bank")
     private List<Account> account;
 
     public BigInteger getId() {

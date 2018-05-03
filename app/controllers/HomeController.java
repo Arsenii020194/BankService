@@ -12,7 +12,6 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.routing.JavaScriptReverseRouter;
-import views.html.main;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
@@ -48,6 +47,7 @@ public class HomeController extends Controller {
     );
 
     public Result GO_MAIN = redirect(routes.MainController.info());
+    public Result GO_MAIN_ADMIN = redirect(routes.MainController.admin());
 
 
     /**

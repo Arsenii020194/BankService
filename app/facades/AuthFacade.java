@@ -3,15 +3,14 @@ package facades;
 import com.avaje.ebean.Ebean;
 import controllers.HomeController;
 import entities.User;
-import play.mvc.Security;
-import services.Secured;
+import entities.UserData;
 
 import javax.inject.Inject;
 import java.util.List;
 
-import static services.Secured.LOGIN;
-
 public class AuthFacade {
+    @Inject
+    private HomeController homeController;
 
     public boolean isContainsInDb(String login, String password) {
         List<User> usersList = Ebean.getDefaultServer().createQuery(User.class)
@@ -26,7 +25,15 @@ public class AuthFacade {
         }
     }
 
-    public User getUser(String login, String password){
+    public UserData findByLogin(String login) {
+        List<User> usersList = Ebean.getDefaultServer().createQuery(User.class)
+                .where()
+                .eq("login", login)
+                .findList();
+        return usersList.get(0).getUserData();
+    }
+
+    public User getUser(String login, String password) {
         List<User> usersList = Ebean.getDefaultServer().createQuery(User.class)
                 .where()
                 .eq("login", login)

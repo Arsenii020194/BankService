@@ -30,3 +30,38 @@
 a{
     cursor:pointer;
 }
+
+.edit_button{
+    background: url(/assets/images/edit.png) 0px 0px no-repeat;
+    background-size: contain;
+    min-height: 25px;
+    display: block;
+}
+
+.remove_button{
+    background: url(/assets/images/remove.png) 0px 0px no-repeat;
+    background-size: contain;
+    min-height: 25px;
+    min-width: 25px;
+    display: block;
+}
+
+.add_button{
+    background: url(/assets/images/add.png) 0px 0px no-repeat;
+    background-size: contain;
+    min-height: 25px;
+    min-width: 25px;
+    display: block;
+}
+
+.append_edit_button{
+    background: url(/assets/images/append.png) 0px 0px no-repeat;
+    background-size: contain;
+    min-height: 25px;
+    min-width: 25px;
+    display: block;
+}
+
+.error_field{
+    border-color:red;
+}

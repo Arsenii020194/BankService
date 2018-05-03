@@ -38,4 +38,15 @@ public class UserDataFacade {
             return null;
         }
     }
+
+    public void updateUserData(UserData newUserData){
+        UserData old = getUserData();
+        old.setAdress(newUserData.getAdress());
+        old.setBillProlongation(newUserData.getBillProlongation());
+        old.setFullName(newUserData.getFullName());
+        old.setInn(newUserData.getInn());
+        old.setKpp(newUserData.getKpp());
+        old.setPhone(newUserData.getPhone());
+        old.save();
+    }
 }

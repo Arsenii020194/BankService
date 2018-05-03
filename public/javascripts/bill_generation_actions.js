@@ -67,6 +67,9 @@ function toInputs(row) {
 
 function validateInt(event) {
     event.target.value = (event.target.value.replace(/[^0-9]/g, ''));
+    if(event.target.value.length == 10){
+        event.target.value = event.target.value.substring(0,9);
+    }
 }
 
 function validateFloat(event) {
@@ -176,4 +179,21 @@ function downloadPdf(json){
          };
     xhr.responseType = 'blob';
     xhr.send(json);
+}
+
+function downloadBillFile(event){
+var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", jsRoutes.controllers.BillGenerationController.download($(event.target).data('doc')).url, true)
+    xhr.setRequestHeader('Content-type', 'text/plain; charset=utf-8');
+    xhr.onload = function (event) {
+             var blob = xhr.response;
+             var fileName = xhr.getResponseHeader("fileName") //if you have the fileName header available
+             var link=document.getElementById('hidden_link');
+             link.href=window.URL.createObjectURL(blob);
+             link.download=fileName + '.pdf';
+             link.click();
+         };
+    xhr.responseType = 'blob';
+    xhr.send();
 }

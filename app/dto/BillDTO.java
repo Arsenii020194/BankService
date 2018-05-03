@@ -4,25 +4,25 @@ import java.util.List;
 
 public class BillDTO {
 
-    private int numOrder;
-    private int billNumber;
+    private String numOrder;
+    private String billNumber;
     private String customer;
     private List<UslugDTO> uslugs;
     private double finalSum;
 
-    public int getNumOrder() {
+    public String getNumOrder() {
         return numOrder;
     }
 
-    public void setNumOrder(int numOrder) {
+    public void setNumOrder(String numOrder) {
         this.numOrder = numOrder;
     }
 
-    public int getBillNumber() {
+    public String getBillNumber() {
         return billNumber;
     }
 
-    public void setBillNumber(int billNumber) {
+    public void setBillNumber(String billNumber) {
         this.billNumber = billNumber;
     }
 

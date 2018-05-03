@@ -1,0 +1,22 @@
+@(bills : List[entities.Bill])
+@main(){
+<style>
+</style>
+<div id="info">
+    <table id="info_t">
+        <tbody>
+        <tr>
+            <td>Номер</td>
+            <td></td>
+        </tr>
+        @for(bill<-bills){
+        <tr>
+            <td>@bill.getNum()</td>
+            <td><input data-doc="@bill.getId()" type="button" value="Скачать файл" onclick="downloadBillFile(event)"></td>
+        </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<a id="hidden_link"></a>
+}

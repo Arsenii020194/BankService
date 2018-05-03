@@ -1,15 +1,23 @@
 package html;
 
+import com.google.gson.Gson;
+import dto.AccountDTO;
 import dto.BillDTO;
+import dto.QrDTO;
 import dto.UslugDTO;
 import entities.Account;
 import entities.UserData;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static html.HtmlUtils.LINE_BREAK;
 
@@ -36,6 +44,9 @@ public class UserBillToHtmlConverter {
         document.append(makeUslugTable());
         document.append(LINE_BREAK);
         document.append(makeFooterTable());
+        document.append(LINE_BREAK);
+        document.append(generateQrImg());
+
 
         return document.toString();
     }
@@ -55,7 +66,7 @@ public class UserBillToHtmlConverter {
                 .append(userData.getInn())
                 .append(", КПП: ")
                 .append(userData.getKpp())
-                .append(", АДРЕС: ")
+                .append(", Адрес: ")
                 .append(userData.getAdress());
 
         HtmlCell recieverCell = new HtmlCell(fullUserDataInfo.toString(), "");
@@ -163,7 +174,7 @@ public class UserBillToHtmlConverter {
         return table.asText();
     }
 
-    private String makeFooterTable(){
+    private String makeFooterTable() {
         HtmlCell leader = new HtmlCell("Руководитель", "");
         HtmlCell leaderSign = new HtmlCell("", "class=\"underlined_cell\"");
         HtmlCell leaderSignDesc = new HtmlCell("", "class=\"underlined_cell\"");
@@ -196,5 +207,25 @@ public class UserBillToHtmlConverter {
         footerTable.addRow(helperRow);
 
         return footerTable.asText();
+    }
+
+    private String generateQrImg() {
+        QrDTO dto = new QrDTO();
+        dto.setInn(userData.getInn());
+        dto.setKpp(userData.getKpp());
+        dto.setNameOrg(userData.getFullName());
+        dto.setSumm(billDTO.getFinalSum());
+        List<AccountDTO> accounts = userData.getAccounts().stream().map(f -> {
+            AccountDTO accountDTO = new AccountDTO();
+            accountDTO.setAcc(f.getAccount());
+            accountDTO.setBik(f.getBank().getBik());
+            accountDTO.setName(f.getBank().getFullName());
+            return accountDTO;
+        }).collect(Collectors.toList());
+        dto.setAccounts(accounts);
+
+        ByteArrayOutputStream out = QRCode.from(new Gson().toJson(dto)).withCharset("utf-8")
+                .to(ImageType.PNG).withSize(200, 200).stream();
+        return "<img style=\"border:1px solid black;\" src=\"data:image/png;base64," + Base64.getEncoder().encodeToString(out.toByteArray()) + "\"></img>";
     }
 }

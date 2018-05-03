@@ -14,7 +14,7 @@ public class Bill extends Model {
 
     @Column(name = "id_bill")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private BigInteger id;
 
     @Column

@@ -24,3 +24,4 @@ libraryDependencies += "com.openhtmltopdf" % "openhtmltopdf-pdfbox" % "0.0.1-RC1
 libraryDependencies += "com.openhtmltopdf" % "openhtmltopdf-jsoup-dom-converter" % "0.0.1-RC13"
 libraryDependencies += "com.google.code.gson" % "gson" % "2.8.2"
 libraryDependencies += "commons-io" % "commons-io" % "2.6"
+libraryDependencies += "net.glxn" % "qrgen" % "1.4"

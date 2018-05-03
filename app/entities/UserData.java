@@ -13,11 +13,11 @@ public class UserData extends Model {
 
     @Column(name = "id_user_data")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private BigInteger id;
 
     @JoinColumn(name = "user")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     @Column(name = "bill_prolongation")
@@ -118,10 +118,8 @@ public class UserData extends Model {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserData userData = (UserData) o;
-        return Objects.equals(user, userData.user) &&
-                Objects.equals(billProlongation, userData.billProlongation) &&
+        return Objects.equals(billProlongation, userData.billProlongation) &&
                 Objects.equals(inn, userData.inn) &&
-                Objects.equals(accounts, userData.accounts) &&
                 Objects.equals(kpp, userData.kpp) &&
                 Objects.equals(fullName, userData.fullName) &&
                 Objects.equals(adress, userData.adress) &&
@@ -131,6 +129,6 @@ public class UserData extends Model {
     @Override
     public int hashCode() {
 
-        return Objects.hash(user, billProlongation, inn, accounts, kpp, fullName, adress, phone);
+        return Objects.hash(billProlongation, inn, kpp, fullName, adress, phone);
     }
 }

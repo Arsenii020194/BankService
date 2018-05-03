@@ -12,7 +12,7 @@ public class Account extends Model {
 
     @Column(name = "id_account")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private BigInteger id;
 
     @Column

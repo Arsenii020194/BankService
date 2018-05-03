@@ -13,8 +13,14 @@ GET     /logout                     controllers.AuthController.logout
 
 GET     /info                       controllers.MainController.info
 GET     /generate                   controllers.MainController.generate
+GET     /admin                      controllers.MainController.admin
+GET     /edit                       controllers.MainController.edit
+POST    /save_edited                controllers.MainController.saveEdited
 
 POST     /generate_pdf              controllers.BillGenerationController.generatePdf
+POST     /generate_pdf_standalone   controllers.StandaloneGenerateController.generatePdf
+GET      /view_docs                 controllers.BillGenerationController.view
+GET      /download                  controllers.BillGenerationController.download(id:Integer)
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /javascriptRoutes      controllers.Application.javascriptRoutes

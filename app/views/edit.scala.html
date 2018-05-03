@@ -1,0 +1,113 @@
+@(data : entities.UserData, banks: List[entities.Bank])
+@main(){
+<style>
+    .bank_select{
+        display:none;
+        width:100%;
+    }
+    .editable{
+        display:none;
+        min-width:450px;
+    }
+    .editable.bank_input{
+        display:block;
+    }
+</style>
+<div id="info">
+    <table id="edit_t">
+        <tbody>
+        <tr id="error_val_row" style="display:none; color:red;"><td><div>Завершите редактирование данных в таблице!</div></td></tr>
+        <tr id="error_row" style="display:none; color:red;"><td colspan="7"><div>Заполните значения в подсвеченных ячейках!</div></td></tr>
+        <tr>
+            <td><h3>Данные юридического лица:</h3></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <hr/>
+            </td>
+        </tr>
+        <tr id="inn">
+            <td>ИНН</td>
+            <td>
+                <div class="editable_div">@data.getInn</div>
+                <input class="editable" type="text" oninput="validateInt(event)" value="@data.getInn"></td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button" onclick="edit_editForm(event)"></a>
+            </td>
+        </tr>
+        <tr id="kpp">
+            <td>КПП</td>
+            <td>
+                <div class="editable_div">@data.getKpp</div>
+                <input class="editable" type="text" oninput="validateInt(event)" value="@data.getKpp"></td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button" onclick="edit_editForm(event)"></a>
+            </td>
+        </tr>
+        <tr id="nameOrg">
+            <td>Название организации</td>
+            <td>
+                <div class="editable_div">@data.getFullName</div>
+                <input class="editable" type="text" value="@data.getFullName"></td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button"
+                   onclick="edit_editForm(event)"></a></td>
+        </tr>
+        <tr id="billProlongation">
+            <td>Длительность счета</td>
+            <td style="display: flex;">
+                <div class="editable_div">@data.getBillProlongation</div>
+                <input class="editable" type="text" value="@data.getBillProlongation" oninput="validateInt(event)">д.
+            </td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button"
+                   onclick="edit_editForm(event)"></a></td>
+        </tr>
+        <tr id="address">
+            <td>Адрес</td>
+            <td>
+                <div class="editable_div">@data.getAdress</div>
+                <input class="editable" type="text" value="@data.getAdress"></td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button" onclick="edit_editForm(event)"></a>
+            </td>
+        </tr>
+        <tr  id="phones">
+            <td>Телефоны</td>
+            <td>
+                <div class="editable_div">@data.getPhone</div>
+                <input class="editable" type="text" value="@data.getPhone"></td>
+            <td><a style="padding: 1px; cursor:pointer;" class="edit_button" onclick="edit_editForm(event)"></a>
+            </td>
+        </tr>
+        <tr>
+            <td><h3>Счета:</h3></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <hr/>
+            </td>
+        </tr>
+        <tr>
+            <td>БИК и название</td>
+            <td>Номер счета</td>
+            <td><a style="padding: 1px; cursor:pointer;" class="add_button" onclick="addBankRow(event)"></a></td>
+        </tr>
+        @for(acc <- data.getAccounts()){
+        <tr>
+            <td>
+                <div data-bik="@acc.getBank().getBik()" data-fullname="@acc.getBank().getFullName()" class="bank_div">@acc.getBank().getBik() @acc.getBank().getFullName()</div>
+            </td>
+            <td>
+                <div class="editable_div">@acc.getAccount()</div></td>
+            <td><a class="remove_button" style="padding: 1px;" onclick="removeExistingRow(event)"></a></td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    <select class="bank_select">
+        @for(bank <- banks){
+        <option data-bik="@bank.getBik()" data-fullName="@bank.getFullName()" value="@bank.getBik @bank.getFullName">
+            @bank.getBik @bank.getFullName
+        </option>
+        }
+    </select>
+    <input type="submit" onclick="save(event)" value="Сохранить">
+    <div data-value="[]" id="accounts_to_delete" style="display:none;"></div>
+</div>
+}
