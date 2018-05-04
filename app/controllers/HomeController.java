@@ -46,8 +46,8 @@ public class HomeController extends Controller {
             routes.AuthController.login()
     );
 
-    public Result GO_MAIN = redirect(routes.MainController.info());
-    public Result GO_MAIN_ADMIN = redirect(routes.MainController.admin());
+    public Result GO_MAIN = redirect(controllers.inetshop.routes.MainController.info());
+    public Result GO_MAIN_ADMIN = redirect(controllers.inetshop.routes.MainController.admin());
 
 
     /**

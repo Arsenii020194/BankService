@@ -179,7 +179,7 @@ function submit(){
     let orgData = new Organization($.trim(inn), $.trim(kpp), $.trim(nameOrg), $.trim(billProlongation), $.trim(address), $.trim(phones));
 
      $.ajax({
-             url: jsRoutes.controllers.MainController.saveEdited().url,
+             url: jsRoutes.controllers.inetshop.MainController.saveEdited().url,
              type: "post",
              data: {data:JSON.stringify(new SaveDataDTO(deletedAccounts, newAccounts, orgData))},
              success: function (response) {

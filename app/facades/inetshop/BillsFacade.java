@@ -1,4 +1,4 @@
-package facades;
+package facades.inetshop;
 
 import com.avaje.ebean.Ebean;
 import entities.Bill;

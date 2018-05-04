@@ -1,14 +1,15 @@
-package controllers;
+package controllers.inetshop;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.openhtmltopdf.DOMBuilder;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
-import dto.BillDTO;
+import dto.inetshop.BillDTO;
+import dto.inetshop.StandaloneBillDTO;
 import entities.Bill;
 import entities.UserData;
-import facades.BillsFacade;
-import facades.UserDataFacade;
+import facades.AuthFacade;
+import facades.inetshop.BillsFacade;
 import html.UserBillToHtmlConverter;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -26,22 +27,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BillGenerationController extends Controller {
-
+public class StandaloneGenerateController extends Controller {
     @Inject
-    private UserDataFacade userDataFacade;
+    private AuthFacade authFacade;
 
     @Inject
     private BillsFacade billsFacade;
 
     public Result generatePdf() throws IOException {
-
         String textBill = request().body().asText();
-        Type billDTOType = new TypeToken<BillDTO>() {
+        Type standaloneBillDTO = new TypeToken<StandaloneBillDTO>() {
         }.getType();
-        BillDTO billDTO = new Gson().fromJson(textBill, billDTOType);
-        UserData userData = userDataFacade.getUserData();
-        UserBillToHtmlConverter userBillToHtmlConverter = new UserBillToHtmlConverter(billDTO, userData);
+        StandaloneBillDTO billDTO = new Gson().fromJson(textBill, standaloneBillDTO);
+        UserData userData = authFacade.findByLogin(billDTO.getLogin());
+        UserBillToHtmlConverter userBillToHtmlConverter = new UserBillToHtmlConverter(billDTO.getBillDTO(), userData);
         PdfRendererBuilder builder = new PdfRendererBuilder();
         ByteArrayOutputStream fileStream = new ByteArrayOutputStream();
         File styleFile = new File("public/stylesheets/print.css");
@@ -58,11 +57,6 @@ public class BillGenerationController extends Controller {
 
         org.w3c.dom.Document doc1 = DOMBuilder.jsoup2DOM(doc);
 
-//        TransformerFactory tf = TransformerFactory.newInstance();
-//        Transformer transformer = tf.newTransformer();
-//
-//        transformer.transform(new DOMSource(doc1), new StreamResult(System.out));
-
         builder.withW3cDocument(doc1, "");
         builder.toStream(fileStream);
         try {
@@ -71,28 +65,20 @@ public class BillGenerationController extends Controller {
             e.printStackTrace();
         }
         response().setHeader("Content-Type", "application/pdf");
-        saveBill(billDTO, fileStream.toByteArray());
+        saveBill(billDTO.getBillDTO(), fileStream.toByteArray(), billDTO.getLogin());
         return ok(fileStream.toByteArray());
     }
 
-    public Result view() {
-        return ok(views.html.bill_view.render(billsFacade.getAllBills(userDataFacade.getUser())));
-    }
-
-    public Result download(Integer id) {
-        return ok(billsFacade.getFileById(id));
-    }
-
-
-    private void saveBill(BillDTO billDTO, byte[] file) {
+    private void saveBill(BillDTO billDTO, byte[] file, String login) {
         Bill bill = new Bill();
+        UserData userData = authFacade.findByLogin(login);
         Timestamp nowDate = Timestamp.valueOf(LocalDate.now().atStartOfDay());
-        Timestamp activeFor = Timestamp.valueOf(LocalDate.now().plusDays(userDataFacade.getUserData().getBillProlongation()).atStartOfDay());
+        Timestamp activeFor = Timestamp.valueOf(LocalDate.now().plusDays(userData.getBillProlongation()).atStartOfDay());
         bill.setDate(nowDate);
         bill.setActiveFor(activeFor);
         bill.setCustomer(billDTO.getCustomer());
         bill.setNum(Integer.valueOf(billDTO.getBillNumber()));
-        bill.setReciever(userDataFacade.getUser());
+        bill.setReciever(userData.getUser());
         bill.setNum(Integer.valueOf(billDTO.getNumOrder()));
         bill.setUslugs(billDTO.getUslugs().stream().map(f -> new Gson().toJson(f)).collect(Collectors.toList()));
         bill.setFile(file);

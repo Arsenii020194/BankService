@@ -1,9 +1,8 @@
-package dto;
+package dto.inetshop;
 
 import java.util.List;
 
 public class BillDTO {
-
     private String numOrder;
     private String billNumber;
     private String customer;

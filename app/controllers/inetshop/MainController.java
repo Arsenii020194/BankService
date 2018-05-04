@@ -1,9 +1,11 @@
-package controllers;
+package controllers.inetshop;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import dto.AccountDTO;
 import dto.SavingDataDTO;
+import dto.StandaloneQrDTO;
+import dto.credit.QrCreditDTO;
 import entities.Bank;
 import entities.UserData;
 import facades.AccountsFacade;
@@ -31,6 +33,19 @@ public class MainController extends Controller {
     private AccountsFacade accountsFacade;
 
     public Result info() {
+        StandaloneQrDTO standaloneQrDTO = new StandaloneQrDTO();
+        standaloneQrDTO.setDestination("оплата по кредиту");
+        standaloneQrDTO.setFinalSum(123123);
+        standaloneQrDTO.setLogin("123123123");
+
+        QrCreditDTO qrCreditDTO = new QrCreditDTO();
+        AccountDTO dto = new AccountDTO();
+        dto.setName("name");
+        dto.setBik(2131231231);
+        dto.setAcc("1231231231231231");
+        qrCreditDTO.setAccount(dto);
+        qrCreditDTO.setQrDTO(standaloneQrDTO);
+
         UserData data = userDataFacade.getUserData();
 
         if (data != null) {

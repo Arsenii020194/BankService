@@ -1,4 +1,4 @@
-package dto;
+package dto.inetshop;
 
 public class UslugDTO {
     private int num;

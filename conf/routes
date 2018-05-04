@@ -11,16 +11,18 @@ POST    /login                      controllers.AuthController.validateAutentifi
 GET     /                           controllers.AuthController.login
 GET     /logout                     controllers.AuthController.logout
 
-GET     /info                       controllers.MainController.info
-GET     /generate                   controllers.MainController.generate
-GET     /admin                      controllers.MainController.admin
-GET     /edit                       controllers.MainController.edit
-POST    /save_edited                controllers.MainController.saveEdited
+GET     /info                       controllers.inetshop.MainController.info
+GET     /generate                   controllers.inetshop.MainController.generate
+GET     /admin                      controllers.inetshop.MainController.admin
+GET     /edit                       controllers.inetshop.MainController.edit
+POST    /save_edited                controllers.inetshop.MainController.saveEdited
 
-POST     /generate_pdf              controllers.BillGenerationController.generatePdf
-POST     /generate_pdf_standalone   controllers.StandaloneGenerateController.generatePdf
-GET      /view_docs                 controllers.BillGenerationController.view
-GET      /download                  controllers.BillGenerationController.download(id:Integer)
+POST    /generate_pdf              controllers.inetshop.BillGenerationController.generatePdf
+POST    /generate_pdf_standalone   controllers.inetshop.StandaloneGenerateController.generatePdf
+GET     /view_docs                 controllers.inetshop.BillGenerationController.view
+GET     /download                  controllers.inetshop.BillGenerationController.download(id:Integer)
 
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /javascriptRoutes      controllers.Application.javascriptRoutes
+POST    /standalone_qr_credit      controllers.credit.StandaloneCreditController.generatePdf
+POST    /standalone_qr             controllers.StandaloneQrCodeGeneratorController.generatePdf
+GET     /assets/*file              controllers.Assets.at(path="/public", file)
+GET     /javascriptRoutes          controllers.Application.javascriptRoutes

@@ -175,11 +175,11 @@ function Bill(numOrder, billNumber, customer, uslugs, finalSum, billDest) {
 function downloadPdf(json){
     var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", jsRoutes.controllers.BillGenerationController.generatePdf().url, true)
+    xhr.open("POST", jsRoutes.controllers.inetshop.BillGenerationController.generatePdf().url, true)
     xhr.setRequestHeader('Content-type', 'text/plain; charset=utf-8');
     xhr.onload = function (event) {
              var blob = xhr.response;
-             var fileName = xhr.getResponseHeader("fileName") //if you have the fileName header available
+             var fileName = 'download' //if you have the fileName header available
              var link=document.getElementById('hidden_link');
              link.href=window.URL.createObjectURL(blob);
              link.download=fileName + '.pdf';
@@ -192,7 +192,7 @@ function downloadPdf(json){
 function downloadBillFile(event){
 var xhr = new XMLHttpRequest();
 
-    xhr.open("GET", jsRoutes.controllers.BillGenerationController.download($(event.target).data('doc')).url, true)
+    xhr.open("GET", jsRoutes.controllers.inetshop.BillGenerationController.download($(event.target).data('doc')).url, true)
     xhr.setRequestHeader('Content-type', 'text/plain; charset=utf-8');
     xhr.onload = function (event) {
              var blob = xhr.response;

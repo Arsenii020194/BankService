@@ -8,9 +8,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import dto.AccountDTO;
-import dto.BillDTO;
 import dto.QrDTO;
-import dto.UslugDTO;
+import dto.inetshop.BillDTO;
+import dto.inetshop.UslugDTO;
 import entities.Account;
 import entities.UserData;
 
