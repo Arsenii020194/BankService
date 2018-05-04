@@ -55,7 +55,7 @@ accountDiv.classList.add('editable_div');
 accountTd.appendChild(accountDiv);
 
 let accountInput = document.createElement('input');
-accountInput.oninput = validateInt;
+accountInput.oninput = validateInt24;
 accountInput.classList.add('editable');
 accountInput.classList.add('bank_input');
 accountInput.type = 'text';
@@ -68,7 +68,7 @@ let appendEditButtonTd = document.createElement('td');
 let appendEditButton = document.createElement('a');
 appendEditButton.style = 'padding: 1px; cursor:pointer;';
 appendEditButton.classList.add('append_edit_button');
-appendEditButton.onclick = validateForEmpty;
+appendEditButton.onclick = validateForEmpty_editForm;
 appendEditButtonTd.appendChild(appendEditButton);
 
 let removeButtonTd = document.createElement('td');
@@ -184,6 +184,7 @@ function submit(){
              data: {data:JSON.stringify(new SaveDataDTO(deletedAccounts, newAccounts, orgData))},
              success: function (response) {
                       alert("Данные успешно сохранены!");
+                       location.reload();
                      },
                      error: function(jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);

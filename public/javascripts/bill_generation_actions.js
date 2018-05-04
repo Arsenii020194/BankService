@@ -72,6 +72,13 @@ function validateInt(event) {
     }
 }
 
+function validateInt24(event){
+    event.target.value = (event.target.value.replace(/[^0-9]/g, ''));
+    if(event.target.value.length == 25){
+        event.target.value = event.target.value.substring(0,24);
+    }
+}
+
 function validateFloat(event) {
     event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 }
