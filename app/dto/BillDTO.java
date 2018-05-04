@@ -7,8 +7,21 @@ public class BillDTO {
     private String numOrder;
     private String billNumber;
     private String customer;
+    private String billDest;
     private List<UslugDTO> uslugs;
     private double finalSum;
+
+    public String getBillDest() {
+        return billDest;
+    }
+
+    public void setBillDest(String billDest) {
+        this.billDest = billDest;
+    }
+
+    public void setFinalSum(double finalSum) {
+        this.finalSum = finalSum;
+    }
 
     public String getNumOrder() {
         return numOrder;

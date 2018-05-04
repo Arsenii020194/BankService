@@ -1,22 +1,24 @@
 package html;
 
 import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import dto.AccountDTO;
 import dto.BillDTO;
 import dto.QrDTO;
 import dto.UslugDTO;
 import entities.Account;
 import entities.UserData;
-import net.glxn.qrgen.QRCode;
-import net.glxn.qrgen.image.ImageType;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static html.HtmlUtils.LINE_BREAK;
@@ -223,9 +225,26 @@ public class UserBillToHtmlConverter {
             return accountDTO;
         }).collect(Collectors.toList());
         dto.setAccounts(accounts);
+        dto.setType(billDTO.getBillDest());
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
-        ByteArrayOutputStream out = QRCode.from(new Gson().toJson(dto)).withCharset("utf-8")
-                .to(ImageType.PNG).withSize(200, 200).stream();
+        Hashtable hints = new Hashtable();
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = qrCodeWriter.encode(
+                    new Gson().toJson(dto),
+                    BarcodeFormat.QR_CODE,
+                    200, 200, hints);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "<img style=\"border:1px solid black;\" src=\"data:image/png;base64," + Base64.getEncoder().encodeToString(out.toByteArray()) + "\"></img>";
     }
 }

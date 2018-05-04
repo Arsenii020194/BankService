@@ -132,7 +132,7 @@ function generateBill() {
         let billNumber = $('#bill_number').val();
         let customer = $('#customer').val();
         let finalSum = getFinalSum();
-        let bill = new Bill(numOrder, billNumber, customer, uslArr, finalSum);
+        let bill = new Bill(numOrder, billNumber, customer, uslArr, finalSum, 'Оплата по заказу №' + numOrder);
         downloadPdf(JSON.stringify(bill));
     }
 }
@@ -156,12 +156,13 @@ function Uslug(num, code, type, count, price, summ) {
 }
 
 
-function Bill(numOrder, billNumber, customer, uslugs, finalSum) {
+function Bill(numOrder, billNumber, customer, uslugs, finalSum, billDest) {
     this.numOrder = numOrder;
     this.billNumber = billNumber;
     this.customer = customer;
     this.uslugs = uslugs;
     this.finalSum = finalSum;
+    this.billDest = billDest;
 }
 
 function downloadPdf(json){
@@ -188,7 +189,7 @@ var xhr = new XMLHttpRequest();
     xhr.setRequestHeader('Content-type', 'text/plain; charset=utf-8');
     xhr.onload = function (event) {
              var blob = xhr.response;
-             var fileName = xhr.getResponseHeader("fileName") //if you have the fileName header available
+             var fileName = 'download' //if you have the fileName header available
              var link=document.getElementById('hidden_link');
              link.href=window.URL.createObjectURL(blob);
              link.download=fileName + '.pdf';
